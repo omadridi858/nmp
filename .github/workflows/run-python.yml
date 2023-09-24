@@ -25,27 +25,7 @@ jobs:
           
       - name: Run Python Script
          run: |
-          python -m pip install requests
-          python mypythonscript.py
+          python gg.py
       
-run-python-via-powershell:
-  needs: run-python
-  runs-on: ubuntu-latest
-  staps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-     - name: Run Python Script via Powershell
-       shell: pwsh
-       run: |
-          python -m pip install requests
-          python mypythonscripts.py
-run-python-multiple-versions:
-  needs: [run-python, run-python-via-powershell]
-  runs-on: $({ matrix.os })
-  strategy:
-    max-parallel: 1
-    matrix:
-      os: [übuntu-latest]
-      python-version: ['3.9','3.10','3.11']
-    fail-fast: False
+
 
