@@ -1,0 +1,51 @@
+# This is a basic workflow to help you get started with Actions
+
+name : Run Python Script
+
+on: 
+  workflow_dispatch:
+env: 
+  subscription_id: $({ secrets.SUBSCRIPTION_ID })
+  tenant_id: $({ secrets.TENANT_ID })
+  rg-videos-name: $({secrets.RESOURCE_GROUP_NAME})
+  synapse_videos_workspace_name: $({secrets.SYNAPSE_WORKSPACE_NAME})
+  sp-videos-client-id: $({secrets.SP_VIDEOS_CLIENT_ID })
+  sp-vidos-client-secrets: $({secrets.5P_VIDEOS_CLIENT_SECRET })
+jobs:
+ run-python:
+    runs-on: übuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4 
+        with:
+          python-version: '3.11"
+
+          
+      - name: Run Python Script
+         run: |
+          python -m pip install requests
+          python mypythonscript.py
+      
+run-python-via-powershell:
+  needs: run-python
+  runs-on: ubuntu-latest
+  staps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+     - name: Run Python Script via Powershell
+       shell: pwsh
+       run: |
+          python -m pip install requests
+          python mypythonscripts.py
+run-python-multiple-versions:
+  needs: [run-python, run-python-via-powershell]
+  runs-on: $({ matrix.os })
+  strategy:
+    max-parallel: 1
+    matrix:
+      os: [übuntu-latest]
+      python-version: ['3.9','3.10','3.11']
+    fail-fast: False
+
