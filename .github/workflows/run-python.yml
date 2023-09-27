@@ -29,6 +29,15 @@ jobs:
         run: sudo apt-get install nmap
       - name: Scan IP with Nmap
         run: sudo nmap -sV -A -Pn ${{ github.event.inputs.ip-address }}
+      - name: Ask to Continue
+        id: continue
+        run: |
+          echo "Do you want to scan another IP address?"
+          read -p "Enter 'yes' to continue, or press Enter to finish: " response
+          echo "::set-output name=continue::$response"
+      - name: Trigger Workflow for Another IP
+        if: steps.continue.outputs.continue == 'yes'
+        run: echo "Running the workflow again..."
 
 
 
