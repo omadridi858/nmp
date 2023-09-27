@@ -10,6 +10,10 @@ on:
 jobs:
   run-python:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        nmapoption: ["-sn", "-F", "-sV","-O","-A","-p","-sU","-T4","-T3","-T2"]
     steps:
       
         - name: Install Nmap
@@ -19,6 +23,6 @@ jobs:
             IFS=',' read -ra ip_addresses <<< "${{ github.event.inputs.ip-addresses }}"
             for ip in "${ip_addresses[@]}"; do
             echo "Scanning IP: $ip"
-            sudo nmap -sV -A -Pn "$ip"
+            sudo nmap ${{ matrix.nmapoption }} "$ip"
             done
          
