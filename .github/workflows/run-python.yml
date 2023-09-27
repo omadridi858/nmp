@@ -1,8 +1,13 @@
 name: Run Python Script
+name: Run Python Script
 
 on:
   workflow_dispatch:
-  
+    inputs:
+      ip-address:
+        description: 'Enter the IP address to scan'
+        required: true
+
 env:
   subscription_id: ${{ secrets.SUBSCRIPTION_ID }}
   tenant_id: ${{ secrets.TENANT_ID }}
@@ -18,17 +23,13 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
       - name: Setup Python
-        uses: actions/setup-python@v2  # Updated to use the correct version
+        uses: actions/setup-python@v2
         with:
-          python-version: '3.11'  # Corrected the version syntax
-      #- name: Run Python Script
-       # run: |
-        #  pip install python-nmap
-        #  python gg.py
+          python-version: '3.11'
       - name: Install Nmap
         run: sudo apt-get install nmap
-      - name: scan ip Nmap
-        run: sudo nmap -sV -A -Pn 101.188.67.134
+      - name: Scan IP with Nmap
+        run: sudo nmap -sV -A -Pn ${{ github.event.inputs.ip-address }}
 
 
 
