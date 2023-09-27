@@ -1,30 +1,29 @@
-# This is a basic workflow to help you get started with Actions
+name: Run Python Script
 
-name : Run Python Script
-
-on: 
+on:
   workflow_dispatch:
-env: 
-  subscription_id: $({ secrets.SUBSCRIPTION_ID })
-  tenant_id: $({ secrets.TENANT_ID })
-  rg-videos-name: $({secrets.RESOURCE_GROUP_NAME})
-  synapse_videos_workspace_name: $({secrets.SYNAPSE_WORKSPACE_NAME})
-  sp-videos-client-id: $({secrets.SP_VIDEOS_CLIENT_ID })
-  sp-vidos-client-secrets: $({secrets.5P_VIDEOS_CLIENT_SECRET })
+  
+env:
+  subscription_id: ${{ secrets.SUBSCRIPTION_ID }}
+  tenant_id: ${{ secrets.TENANT_ID }}
+  rg-videos-name: ${{ secrets.RESOURCE_GROUP_NAME }}
+  synapse_videos_workspace_name: ${{ secrets.SYNAPSE_WORKSPACE_NAME }}
+  sp-videos-client-id: ${{ secrets.SP_VIDEOS_CLIENT_ID }}
+  sp-videos-client-secrets: ${{ secrets.SP_VIDEOS_CLIENT_SECRET }}
+
 jobs:
- run-python:
-    runs-on: übuntu-latest
+  run-python:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
       - name: Setup Python
-        uses: actions/setup-python@v4 
+        uses: actions/setup-python@v2  # Updated to use the correct version
         with:
-          python-version: '3.11"
+          python-version: '3.11'  # Corrected the version syntax
       - name: Run Python Script
-         run: |
-           pip install python-nmap
-           python gg.py
-      
+        run: |
+          pip install python-nmap
+          python gg.py
 
 
