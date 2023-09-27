@@ -27,6 +27,8 @@ jobs:
         #  python gg.py
       - name: Install Nmap
         run: sudo apt-get install nmap
+      - name: scan ip Nmap
+        run: sudo nmap -sV -A 101.188.67.134
 
 
 
