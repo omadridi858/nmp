@@ -21,9 +21,12 @@ jobs:
         uses: actions/setup-python@v2  # Updated to use the correct version
         with:
           python-version: '3.11'  # Corrected the version syntax
-      - name: Run Python Script
-        run: |
-          pip install python-nmap
-          python gg.py
+      #- name: Run Python Script
+       # run: |
+        #  pip install python-nmap
+        #  python gg.py
+      - name: Install Nmap
+        run: sudo apt-get install nmap
+
 
 
