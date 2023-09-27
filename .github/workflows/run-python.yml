@@ -7,30 +7,18 @@ on:
         description: 'Enter a comma-separated list of IP addresses to scan'
         required: true
 
-env:
-  subscription_id: ${{ secrets.SUBSCRIPTION_ID }}
-  tenant_id: ${{ secrets.TENANT_ID }}
-  rg-videos-name: ${{ secrets.RESOURCE_GROUP_NAME }}
-  synapse_videos_workspace_name: ${{ secrets.SYNAPSE_WORKSPACE_NAME }}
-  sp-videos-client-id: ${{ secrets.SP_VIDEOS_CLIENT_ID }}
-  sp-videos-client-secrets: ${{ secrets.SP_VIDEOS_CLIENT_SECRET }}
-
 jobs:
   run-python:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.11'
-      - name: Install Nmap
-        run: sudo apt-get install nmap
-      - name: Scan IP with Nmap
-        run: |
-          IFS=',' read -ra ip_addresses <<< "${{ github.event.inputs.ip-addresses }}"
-          for ip in "${ip_addresses[@]}"; do
+      
+        - name: Install Nmap
+          run: sudo apt-get install nmap
+        - name: Scan IP with Nmap
+          run: |
+            IFS=',' read -ra ip_addresses <<< "${{ github.event.inputs.ip-addresses }}"
+            for ip in "${ip_addresses[@]}"; do
             echo "Scanning IP: $ip"
             sudo nmap -sV -A -Pn "$ip"
-          done
+            done
+         
