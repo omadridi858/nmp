@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        nmapoption: ["-sn", "-F", "-sV","-O","-A","-p","-sU","-T4","-T3","-T2"]
+        nmapoption: ["-sn", "-F", "-sV","-O","-A","-p","-sU","-T4","-T3","-T2","-O -sV -A"]
     steps:
       
         - name: Install Nmap
